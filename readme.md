@@ -1,4 +1,4 @@
-## User Started pack for better organization. All credits go to Brad Traversy and Traversy Media
+## Used Started pack for better organization. All credits go to Brad Traversy and Traversy Media
 
 # JavaScript Sandbox
 
