@@ -58,3 +58,8 @@ console.log(positiveNums)
 // Challenge 3
 
 const words = ['coder', 'programmer', 'developer']
+const capWords = words.map((letter) => {
+  return letter[0].toUpperCase() + letter.slice(1, letter.length)
+})
+
+console.log(capWords)

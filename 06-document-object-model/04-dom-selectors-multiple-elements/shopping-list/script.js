@@ -1,0 +1,15 @@
+const listItems = document.querySelectorAll('.item')
+// const arrayListItems = Array.from(listItems)
+// console.log(typeof arrayListItems)
+// console.log(arrayListItems)
+// console.log(typeof listItems)
+// console.log(listItems)
+// listItems.forEach((item) => console.log(item.innerText))
+const listItems2 = document.getElementsByClassName('item')
+console.log(listItems2)
+const arrayListItems2 = Array.from(listItems2)
+console.log(arrayListItems2)
+// And that is how you run a ForEach on HTML collection!
+arrayListItems2.forEach((element) => {
+  console.log(element.innerText)
+})
