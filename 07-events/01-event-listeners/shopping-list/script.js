@@ -32,4 +32,4 @@ clearBtn.addEventListener('wheel', mouseWheel)
 clearBtn.addEventListener('mouseover', mouseOver)
 clearBtn.addEventListener('mouseout', mouseOut)
 
-// git sync test 02
+// git sync test 03
