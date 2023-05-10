@@ -12,3 +12,17 @@
 - `screenX` - The x position of the mouse click relative to the screen
 - `screenY` - The y position of the mouse click relative to the screen
 */
+const logo = document.querySelector('img')
+// logo.addEventListener('click', (e) => console.log(e))
+// const onClick = (e) => console.log(e)
+// const onClick = (e) => console.log(e.target)
+// const onClick = (e) => console.log(e.currentTarget)
+// const onClick = (e) => console.log(e.type)
+// const onClick = (e) => console.log(e.timeStamp)
+const onClick = (e) => console.log(new Date(e.timeStamp).toLocaleString())
+// const onClick = (e) => {
+//   console.log(e.target)
+//   console.log(e.currentTarget)
+// }
+// logo.addEventListener('click', onClick)
+document.body.addEventListener('click', onClick)
