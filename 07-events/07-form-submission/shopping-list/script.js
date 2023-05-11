@@ -18,7 +18,7 @@ const onSubmit2 = (e) => {
   //   console.log(entries)
   //   // We get an Iterator
   //   // We can use for of loop
-  for (const entry of entries) {
+  for (let entry of entries) {
     console.log(entry)
   }
 }
