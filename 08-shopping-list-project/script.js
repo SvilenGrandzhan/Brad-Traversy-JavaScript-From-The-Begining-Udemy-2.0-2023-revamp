@@ -51,6 +51,14 @@ const createNewLiElement = () => {
   newLiElement.appendChild(textNode)
   newLiElement.appendChild(newButton)
   itemList.appendChild(newLiElement)
+  let itemsFromStorage
+  if (localStorage.getItem('items') === null) {
+    itemsFromStorage = []
+  } else {
+    itemsFromStorage = JSON.parse(localStorage.getItem('items'))
+  }
+  itemsFromStorage.push(itemInput.value)
+  localStorage.setItem('items', JSON.stringify(itemsFromStorage))
   removeFilterClearB()
   // Something I forgot. Clear the value of itemInput
   itemInput.value = ''
@@ -133,8 +141,9 @@ const filterItem = (e) => {
   items.forEach((element) => {
     // Brad has c o m p l e t l y  different way to validate
     // if (text !== element.innerText.toLocaleLowerCase) {
+    // Need to read more about this .indexOf() !=
     if (element.innerText.toLocaleLowerCase().indexOf(text) != -1) {
-      // Another take way: If wonder what display to put opposite to none
+      // Another take way: if I wonder what display to put opposite to none
       // check original style in HTML file
       element.style.display = 'flex'
     } else {
