@@ -5,136 +5,94 @@ const itemList = document.getElementById('item-list')
 const clearButton = document.getElementById('clear')
 const filter = document.getElementById('filter')
 
-// Functions
-// Fist function collect itemInput value and check if it is empty sting
-const addItem = (e) => {
-  //Prevent from submit
-  e.preventDefault()
-  // // Simple test to check if event listener is working
-  // console.log(itemInput.value)
-  // // My version of validation of input value
-  // if (itemInput.value !== ' ') {
-  //   // validation of if statement
-  //   // console.log(`Print of input.value ${itemInput.value}`)
-  // } else {
-  //   // alert('input something')
-  // }
-  // Brad's version is better it is only one if, no else
-  if (itemInput.value === ' ') {
-    alert('input something')
-    return
-    // And uses return!
-  }
-  // // Checking if it working in case it is not empty string
-  // console.log(`Print of itemInput value: ${itemInput.value}`)
-  createNewLiElement()
+const displayItems = () => {
+  const itemsFromStorage = getItemsFromLocalStorage()
+  itemsFromStorage.forEach((element) => {
+    addItemToDOM(element)
+  })
+  toggleFilterClearButton()
 }
-// Second function. Create new li element
-// My version
-const createNewLiElement = () => {
-  // Adding validation for existing li element
-  // if (itemList.childElementCount === 0) {
-  //   createFilter()
-  //   createClearAllButton()
-  // }
-  const newLiElement = document.createElement('li')
-  // // This can be done better
-  // newLiElement.innerText = itemInput.value
-  // Brad's version and bottom down append another textNode child
-  const textNode = document.createTextNode(itemInput.value)
-  const newButton = document.createElement('button')
-  newButton.className = 'remove-item btn-link text-red'
-  const newIcon = document.createElement('i')
-  newIcon.className = 'fa-solid fa-xmark'
-  newButton.appendChild(newIcon)
-  // Be aware of the order of appending
-  newLiElement.appendChild(textNode)
-  newLiElement.appendChild(newButton)
-  itemList.appendChild(newLiElement)
-  let itemsFromStorage
-  if (localStorage.getItem('items') === null) {
-    itemsFromStorage = []
-  } else {
-    itemsFromStorage = JSON.parse(localStorage.getItem('items'))
+
+const addItem = (e) => {
+  e.preventDefault()
+  const newItem = itemInput.value
+  if (newItem === '') {
+    alert('Please, add something')
   }
-  itemsFromStorage.push(itemInput.value)
-  localStorage.setItem('items', JSON.stringify(itemsFromStorage))
-  removeFilterClearB()
-  // Something I forgot. Clear the value of itemInput
+  addItemToDOM(newItem)
+  addToLocalStorage(newItem)
+  toggleFilterClearButton()
   itemInput.value = ''
 }
 
-// Delete single item. Later delete all items
-// For single delete will do event delegation on the parent item
-// const deleteSingle = (e) => e.target.remove()
-// It works, but it is not targeting the X icon
-// if I click anywhere on li element it removes item
-// In Brad's version he is adding a verification by className
-const deleteSingle = (e) => {
-  // if (e.target.parentElement.className === 'remove-item btn-link text-red') {
-  // // In my version it point to exact className
-  // // Brad's version is more flexible using classList.contains()
-  if (e.target.parentElement.classList.contains('remove-item')) {
-    // This is something new to me. NB to learn
-    if (confirm('Are you sure?')) {
-      e.target.parentElement.parentElement.remove()
-    }
-  }
-  // // Let's check if we have any li elements left
-  // // If we don't have any delete filter and clear all
-  // if (itemList.childElementCount === 0) {
-  //   filter.remove()
-  //   clearButton.remove()
-  // }
-  removeFilterClearB()
+const addItemToDOM = (item) => {
+  const newLiItem = document.createElement('li')
+  newLiItem.appendChild(document.createTextNode(item))
+  const button = createButton('remove-item btn-link text-red')
+  newLiItem.appendChild(button)
+  itemList.appendChild(newLiItem)
 }
 
-// // When everything is deleted incl filter and clearButton
-// // and add new item, need to recreate filter and clearButton
-// const createFilter = () => {
-//   const input = document.createElement('input')
-//   input.type = 'text'
-//   input.id = 'filter'
-//   input.className = 'form-input-filter'
-//   input.placeholder = 'Filter Items'
-//   document.querySelector('.filter').appendChild(input)
-// }
+const addToLocalStorage = (item) => {
+  const itemsFromStorage = getItemsFromLocalStorage()
+  itemsFromStorage.push(item)
+  localStorage.setItem('keys', JSON.stringify(itemsFromStorage))
+}
 
-// // Recreate clearAll button
-// const createClearAllButton = () => {
-//   const clearButton = document.createElement('button')
-//   clearButton.id = 'clear'
-//   clearButton.className = 'btn-clear'
-//   // Not sure if this is the right way to do it.
-//   // Will follow Brad's idea to make it with textNode
-//   const textNode = document.createTextNode('ClearAll')
-//   clearButton.appendChild(textNode)
-//   document.querySelector('.container').appendChild(clearButton)
-// }
+const getItemsFromLocalStorage = (item) => {
+  let itemsFromStorage
+  if (localStorage.getItem('keys') === null) {
+    itemsFromStorage = []
+  } else {
+    itemsFromStorage = JSON.parse(localStorage.getItem('keys'))
+  }
+  return itemsFromStorage
+}
 
-// Now to clear all li element with ClearAll button
+const createButton = (classNames) => {
+  const button = document.createElement('button')
+  button.className = classNames
+  const icon = createIcon('fa-solid fa-xmark')
+  button.appendChild(icon)
+  return button
+}
+
+const createIcon = (classNames) => {
+  const icon = document.createElement('i')
+  icon.className = classNames
+  return icon
+}
+
+const deleteSingle = (item) => {
+  item.remove()
+  removeItemFromStorage(item.textContent)
+  toggleFilterClearButton()
+}
+
 const clearAll = (e) => {
-  // Pointing to previous sibling (ul) children and converting to array
   const liList = Array.from(e.target.previousElementSibling.children)
-  // use for each to remove all li elements
   liList.forEach((element) => {
     element.remove()
   })
-  // // Also remove filter, if we don't have any elements
-  // filter.remove()
-  // // Also remove clearButton
-  // clearButton.remove()
-  // // Brad's version is so easy and elegant
-  // while (itemList.firstChild) {
-  //   itemList.removeChild(itemList.firstChild)
-  // }
-  // Will keep my version except for remove filter and clearB
-  removeFilterClearB()
+  localStorage.removeItem('keys')
+  toggleFilterClearButton()
+}
+
+const removeItemFromStorage = (item) => {
+  let itemsFromStorage = getItemsFromLocalStorage()
+  itemsFromStorage = itemsFromStorage.filter((element) => element !== item)
+  localStorage.setItem(JSON.stringify(itemsFromStorage))
+}
+
+const onClickItem = (e) => {
+  const item = e.target.parentElement
+  if (item.classList.contains('remove-item')) {
+    item.parentElement.remove()
+  }
 }
 
 // Function to filter items
 const filterItem = (e) => {
-  // Watching Brad, I guess I can make it better
   const text = e.target.value.toLowerCase()
   // adding added items value
   const items = document.querySelectorAll('li')
@@ -152,8 +110,9 @@ const filterItem = (e) => {
   })
 }
 
-const removeFilterClearB = () => {
-  if (itemList.childElementCount === 0) {
+const toggleFilterClearButton = () => {
+  const items = document.querySelectorAll('li')
+  if (items.length === 0) {
     filter.style.display = 'none'
     clearButton.style.display = 'none'
   } else {
@@ -162,14 +121,19 @@ const removeFilterClearB = () => {
   }
 }
 
-// Event listeners
-// Event listener for submitting new item to the list
-itemForm.addEventListener('submit', addItem)
-// Event listener for deleting single item
-itemList.addEventListener('click', deleteSingle)
-// Event Listener to clear all items in the list
-clearButton.addEventListener('click', clearAll)
-// Event Listener to filter items in the list
-filter.addEventListener('input', filterItem)
+const init = () => {
+  // Event listeners
+  // Event listener for submitting new item to the list
+  itemForm.addEventListener('submit', addItem)
+  // Event listener for deleting single item
+  itemList.addEventListener('click', deleteSingle)
+  // Event Listener to clear all items in the list
+  clearButton.addEventListener('click', onClickItem)
+  // Event Listener to filter items in the list
+  filter.addEventListener('input', filterItem)
+  document.addEventListener('DOMContentLoaded', displayItems)
+}
 
-removeFilterClearB()
+init()
+
+toggleFilterClearButton()
