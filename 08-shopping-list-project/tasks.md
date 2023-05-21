@@ -6,3 +6,8 @@
 6. click on an item to put into "Edit mode" and add to form
 7. Update item
 8. Deploy to Netlify
+
+Project updates:
+
+1. Try optimize the code. Do it with less lines of code
+2. Try to order list alphabetically
