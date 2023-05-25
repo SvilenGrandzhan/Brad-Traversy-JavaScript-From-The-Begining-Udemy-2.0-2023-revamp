@@ -1,9 +1,13 @@
+const button = document.querySelector('button')
+const toggle = () => button.classList.toggle('danger')
+button.addEventListener('click', toggle)
+
 // function toggle(e) {
 //   console.log('callback ran');
 //   e.target.classList.toggle('danger');
 // }
 
-const toggle = (e) => e.target.classList.toggle('danger')
+// const toggle = (e) => e.target.classList.toggle('danger')
 
 document.querySelector('button').addEventListener('click', toggle)
 

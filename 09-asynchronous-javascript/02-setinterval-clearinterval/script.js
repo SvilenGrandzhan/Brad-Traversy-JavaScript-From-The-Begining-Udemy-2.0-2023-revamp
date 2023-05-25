@@ -6,12 +6,13 @@ const myCallBack = () => (interval = setInterval(randomGreenColor, 1000))
 const stopChange = () => {
   clearInterval(interval),
     (document.querySelector('h1').textContent = 'setInterval & clearInterval'),
+    (document.querySelector('h1').style.color = 'black'),
     (document.body.style.backgroundColor = 'white')
 }
 
 // const colorChange = () => {
 //   const bodyStyle = document.body.style
-//   bodyStyle.backgroundColor !== 'black'
+//   bodyStyle.backgroundColor == 'white'
 //     ? ((bodyStyle.backgroundColor = 'black'), (bodyStyle.color = 'white'))
 //     : ((bodyStyle.backgroundColor = 'white'), (bodyStyle.color = 'black'))
 // }
