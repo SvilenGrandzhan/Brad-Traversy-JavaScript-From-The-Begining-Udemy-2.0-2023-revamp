@@ -1,0 +1,23 @@
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "dateOfBirth": "08-29-1997",
+  "age": 25,
+  "profession": "devops",
+  "isAdmin": true,
+  "friends": [
+    "Jennifer",
+    "Michael",
+    "Emily",
+    "William",
+    "Jessica",
+    "Christopher"
+  ],
+  "address": {
+    "street": "123 Main Street",
+    "city": "San Francisco",
+    "postCode": 94105,
+    "plusCode": "QJR4+M6",
+    "state": "CA"
+  }
+}

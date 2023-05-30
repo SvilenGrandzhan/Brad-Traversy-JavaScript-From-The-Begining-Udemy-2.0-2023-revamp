@@ -1,14 +1,11 @@
 const div = document.getElementById('joke')
 const button = document.getElementById('joke-btn')
 const random = () => {
-  const xhr = new XMLHttpRequest()
-  xhr.open('GET', 'https://api.chucknorris.io/jokes/random')
-  xhr.onreadystatechange = function () {
-    // console.log(JSON.parse(this.responseText))
-    div.innerHTML = JSON.parse(this.responseText).value
-    // console.log(this.responseText)
-  }
-  xhr.send()
+  fetch('https://api.chucknorris.io/jokes/random')
+    .then((response) => response.json())
+    .then((data) => {
+      div.innerHTML = data.value
+    })
 }
 button.addEventListener('click', random)
 document.addEventListener('DOMContentLoaded', random)

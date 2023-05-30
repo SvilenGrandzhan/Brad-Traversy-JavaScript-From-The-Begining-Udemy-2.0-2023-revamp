@@ -1,0 +1,6 @@
+// fetch('./movies.json')
+//   .then((response) => response.json())
+//   .then((data) => console.log(data[0].title))
+fetch('https:/api.github.com/users/svilengrandzhan/repos')
+  .then((response) => response.json())
+  .then((data) => console.log(data))
