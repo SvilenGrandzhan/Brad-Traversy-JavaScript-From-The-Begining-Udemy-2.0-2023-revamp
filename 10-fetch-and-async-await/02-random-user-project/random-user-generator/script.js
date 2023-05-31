@@ -1,42 +1,30 @@
-fetch('https://randomuser.me/api').then((response) => response.json())
-//   .then((data) => {
-//     const array = document.querySelectorAll('p')
-//     array.forEach((element) => {
-//       if ((element.firstChild.nextElementSibling.innerHTML = 'Name:')) {
-//         element.firstChild.nextElementSibling.nextSibling.nodeValue = `${data.results[0].name.first} ${data.results[0].name.last}`
-//       }
-//       if ((element.firstChild.nextElementSibling.innerHTML = 'Email:')) {
-//         element.firstChild.nextElementSibling.nextSibling.nodeValue =
-//           data.results[0].email
-//       }
-//       if ((element.firstChild.nextElementSibling.innerHTML = 'Phone:')) {
-//         element.firstChild.nextElementSibling.nextSibling.nodeValue =
-//           data.results[0].phone
-//       }
-//       if ((element.firstChild.nextElementSibling.innerHTML = 'Location:')) {
-//         element.firstChild.nextElementSibling.nextSibling.nodeValue =
-//           data.results[0].location.city
-//       }
-//       if ((element.firstChild.nextElementSibling.innerHTML = 'Age:')) {
-//         element.firstChild.nextElementSibling.nextSibling.nodeValue =
-//           data.results[0].dob.age
-//       }
-//     })
-//   })
-
-// const info = document.querySelector('p').firstChild.nextElementSibling
-// console.log(`This should be my verification:  ${info.innerHTML}`)
-// console.log(`This is the replace value:  ${info.nextSibling.nodeValue}`)
-
-// const array = document.querySelectorAll('p')
-// array.forEach((element) => {
-//   console.log(element.firstChild.nextElementSibling.innerHTML)
-//   console.log(element.firstChild.nextElementSibling.nextSibling.nodeValue)
-// })
-
-// data.results[0].email
-
-// find()
-// map()
-// keys()
-// values()
+const request = () => {
+  fetch('https://randomuser.me/api')
+    .then((response) => response.json())
+    .then((data) => {
+      document.getElementById('portrait').src = data.results[0].picture.large
+      data.results[0].gender == 'male'
+        ? (document.body.className = 'bg-blue-400 text-white overflow-x-hidden')
+        : (document.body.className = 'bg-pink-400 text-white overflow-x-hidden')
+      const array = document.querySelectorAll('span')
+      array.forEach((element) => {
+        if (element.innerText == 'Name: ') {
+          element.nextSibling.nodeValue = `${data.results[0].name.first} ${data.results[0].name.last}`
+        }
+        if (element.innerText == 'Email: ') {
+          element.nextSibling.nodeValue = data.results[0].email
+        }
+        if (element.innerText == 'Phone: ') {
+          element.nextSibling.nodeValue = data.results[0].phone
+        }
+        if (element.innerText == 'Location: ') {
+          element.nextSibling.nodeValue = data.results[0].location.city
+        }
+        if (element.innerText == 'Age: ') {
+          element.nextSibling.nodeValue = data.results[0].dob.age
+        }
+      })
+    })
+}
+request()
+document.getElementById('generate').addEventListener('click', request)

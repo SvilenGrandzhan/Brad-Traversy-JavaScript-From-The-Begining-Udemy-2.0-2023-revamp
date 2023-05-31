@@ -63,7 +63,7 @@ fetch('./person.json')
   .then((response) => response.json())
   .then((person) => {
     // // this is here to trow an error
-    person.calculateAge()
+    // person.calculateAge()
     document.querySelector(
       'h1'
     ).textContent = `${person.firstName} ${person.lastName} is ${person.age} years old.`
