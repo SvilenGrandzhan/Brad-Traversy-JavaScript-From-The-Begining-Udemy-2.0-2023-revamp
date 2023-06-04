@@ -1,44 +1,48 @@
-const init = () => {
+const form = document.getElementById('todo-form')
+const divTodoList = document.getElementById('todo-list')
+
+const loadItems = () => {
   fetch('https://jsonplaceholder.typicode.com/todos?_limit=8')
     .then((response) => response.json())
     .then((json) => {
-      json.forEach((element) => {
-        // console.log(element)
-        const parent = document.getElementById('todo-list')
-        const div = document.createElement('div')
-        div.textContent = element.title
-        div.id = `${element.id}`
-        if (element.completed) {
-          div.classList.add('done')
-        }
-        parent.appendChild(div)
-      })
+      json.forEach((element) => addTodo(element))
     })
 }
 
-init()
+const addTodo = (item) => {
+  const div = document.createElement('div')
+  div.appendChild(document.createTextNode(item.title))
+  div.setAttribute('data-id', item.id)
+  if (item.completed) {
+    div.classList.add('done')
+  }
+  document.getElementById('todo-list').appendChild(div)
+}
 
-const update = (e) => {
-  e.target.classList.add('done')
-  fetch(`https://jsonplaceholder.typicode.com/todos/${e.target.id}`, {
-    method: 'PUT',
+const newItem = (e) => {
+  e.preventDefault()
+  fetch('https://jsonplaceholder.typicode.com/todos', {
+    method: 'POST',
     body: JSON.stringify({
-      id: e.target.id,
-      title: e.target.textContent,
-      completed: true,
       userId: 1,
+      title: form.firstElementChild.value,
+      completed: false,
     }),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
   })
     .then((response) => response.json())
-    .then((json) => console.log(json))
+    .then((json) => addTodo(json))
+}
+const updateItem = (e) => {
+  form.firstElementChild.value = e.target.textContent
 }
 
-const deleteToDo = (e) => {
-  console.log(`delete`)
+const init = () => {
+  document.addEventListener('DOMContentLoaded', loadItems)
+  form.addEventListener('submit', newItem)
+  divTodoList.addEventListener('click', updateItem)
 }
 
-document.body.addEventListener('click', update)
-document.body.addEventListener('dblclick', deleteToDo)
+init()
