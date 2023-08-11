@@ -1,0 +1,14 @@
+{
+  "name": "playground",
+  "version": "1.0.0",
+  "description": "Node sandbox for import export module and installation of npm packages",
+  "main": "app.js",
+  "scripts": {
+    "test": "t"
+  },
+  "author": "Svilen Grandzhan working on Brad Traversy's MJS 2.0",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.4.0"
+  }
+}

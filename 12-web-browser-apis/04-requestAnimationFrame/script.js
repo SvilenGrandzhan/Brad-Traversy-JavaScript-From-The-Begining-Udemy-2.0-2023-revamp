@@ -13,6 +13,7 @@ function step(timestamp) {
   if (done) {
     return
   }
+  //
   //   console.log(elapsed)
   //   image.style.transform = `translateX(${elapsed / 2}px)`
   //   image.style.transform = `translateY(${elapsed * 0.2}px)`
